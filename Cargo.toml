@@ -10,6 +10,10 @@ license = "Apache-2.0"
 [lib]
 proc-macro = true
 
+[features]
+default = []
+release = []
+
 [dependencies]
 quote = "1"
 proc-macro2 = "1.0"

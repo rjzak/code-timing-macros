@@ -5,6 +5,10 @@ use quote::quote;
 /// Time the duration of a function
 #[proc_macro_attribute]
 pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
+    // Do nothing if release and not using the release feature
+    #[cfg(all(not(debug_assertions), not(feature = "release")))]
+    return input;
+
     let mut item: syn::Item = syn::parse(input).unwrap();
 
     let fn_item = match &mut item {
