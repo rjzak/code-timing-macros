@@ -1,10 +1,13 @@
+#![doc = include_str!("../README.md")]
+#![deny(missing_docs)]
+#![deny(clippy::cargo)]
 #![allow(unreachable_code)]
 
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::ItemFn;
 
-/// Time the duration of a function
+/// Time the duration of a function, either to stdout or via `tracing`.
 #[proc_macro_attribute]
 pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
     // Do nothing if release and not using the release feature
