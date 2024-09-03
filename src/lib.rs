@@ -25,7 +25,10 @@ pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
             let start = std::time::Instant::now();
             let result = (|| #func_block)();
             let duration: std::time::Duration = start.elapsed();
+            #[cfg(not(feature = "tracing"))]
             println!("Function `{}` took {:?}", stringify!(#func_name), duration);
+            #[cfg(feature = "tracing")]
+            tracing::trace!("Function `{}` took {:?}", stringify!(#func_name), duration);
             result
         }
     };

@@ -1,7 +1,7 @@
 use std::thread;
 use std::time::Duration;
 
-use timer_macro::time_function;
+use code_timing_macros::time_function;
 
 #[time_function]
 fn sleeper() {
@@ -16,6 +16,6 @@ fn meaning_of_life() -> u8 {
 #[test]
 fn macro_test() {
     sleeper();
-    
+
     assert_eq!(meaning_of_life(), 42);
 }
