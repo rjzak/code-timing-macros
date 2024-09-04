@@ -5,11 +5,11 @@ Contributions welcomed!
 
 ### Macros:
 * Adding `#[time_function]` to a function causes the program to print how long a function took to run when it's finished.
-* Not implemented: another macro for inline code.
+* Use `time_snippet!()` to report the timing for a snippet of code, doesn't yet handle a data return.
 
 ### Capabilities:
 * Works on functions with or without a return.
-* Async functions not tested, likely won't work (yet).
+* Async functions tested and seem to work. Please report any issues.
 * Const functions won't work since the contents of the function won't be determinable at compile time.
 
 ### Features

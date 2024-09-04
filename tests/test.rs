@@ -1,7 +1,7 @@
 use std::thread;
 use std::time::Duration;
 
-use code_timing_macros::time_function;
+use code_timing_macros::{time_function, time_snippet};
 
 #[time_function]
 fn sleeper() {
@@ -31,4 +31,17 @@ fn simple_functions() {
 #[tokio::test]
 async fn async_function() {
     assert_eq!(test_async().await.unwrap(), 10);
+}
+
+#[test]
+fn snippet() {
+    time_snippet!({
+        let bytes = std::fs::read(std::env::current_exe().unwrap()).unwrap();
+        let mut avg = 0.0f32;
+        for b in &bytes {
+            avg += *b as f32;
+        }
+        avg /= bytes.len() as f32;
+        println!("Avg: {avg}");
+    });
 }

@@ -54,3 +54,30 @@ pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
     // Return the generated code as a token stream
     output.into()
 }
+
+/// Time the duration of code snippet, either to stdout or via `tracing`.
+#[proc_macro]
+pub fn time_snippet(input: TokenStream) -> TokenStream {
+    // Do nothing if release and not using the release feature
+    #[cfg(all(not(debug_assertions), not(feature = "release")))]
+    return input;
+
+    let block: proc_macro2::token_stream::TokenStream = input.into();
+
+    let output = quote! {
+        {
+            let begin = line!();
+            let start = std::time::Instant::now();
+            {
+                #block
+            }
+            let duration: std::time::Duration = start.elapsed();
+            #[cfg(not(feature = "tracing"))]
+            println!("{}:{} took {:?}.", file!(), begin, duration);
+            #[cfg(feature = "tracing")]
+            tracing::trace!("{}:{} took {:?}.", file!(), begin, duration);
+        }
+    };
+
+    output.into()
+}
