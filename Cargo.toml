@@ -1,6 +1,6 @@
 [package]
 name = "code-timing-macros"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Richard Zak <richard.j.zak@gmail.com>"]
 description = "Macros for easily measuring execution time of various code pieces"
 repository = "https://github.com/rjzak/code-timing-macros"
