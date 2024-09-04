@@ -27,4 +27,8 @@ jobs:
       - name: Build
         run: cargo build
       - name: Test
-        run: cargo test
+        run: |
+          cargo test -- --nocapture --test-threads=1
+          cargo test features=tracing
+          cargo test --release --features=release -- --nocapture --test-threads=1
+          cargo test --release -- --nocapture --test-threads=1

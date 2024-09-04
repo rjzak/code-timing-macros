@@ -15,9 +15,7 @@ fn meaning_of_life() -> u8 {
 
 #[time_function]
 async fn test_async() -> Option<u16> {
-    let handle = tokio::spawn(async {
-        10
-    });
+    let handle = tokio::spawn(async { 10 });
 
     let out = handle.await.unwrap();
     Some(out)
