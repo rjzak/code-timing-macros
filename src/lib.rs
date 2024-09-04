@@ -23,16 +23,31 @@ pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
     let func_output = &input.sig.output;
 
     // Generate the wrapped function
-    let output = quote! {
-        fn #func_name() #func_output {
-            let start = std::time::Instant::now();
-            let result = (|| #func_block)();
-            let duration: std::time::Duration = start.elapsed();
-            #[cfg(not(feature = "tracing"))]
-            println!("Function `{}` took {:?}", stringify!(#func_name), duration);
-            #[cfg(feature = "tracing")]
-            tracing::trace!("Function `{}` took {:?}", stringify!(#func_name), duration);
-            result
+    let output = if input.sig.asyncness.is_some() {
+        quote! {
+            async fn #func_name() #func_output {
+                let start = std::time::Instant::now();
+                let result = (|| async #func_block)().await;
+                let duration: std::time::Duration = start.elapsed();
+                #[cfg(not(feature = "tracing"))]
+                println!("Function `{}` took {:?}", stringify!(#func_name), duration);
+                #[cfg(feature = "tracing")]
+                tracing::trace!("Function `{}` took {:?}", stringify!(#func_name), duration);
+                result
+            }
+        }
+    } else {
+        quote! {
+            fn #func_name() #func_output {
+                let start = std::time::Instant::now();
+                let result = (|| #func_block)();
+                let duration: std::time::Duration = start.elapsed();
+                #[cfg(not(feature = "tracing"))]
+                println!("Function `{}` took {:?}", stringify!(#func_name), duration);
+                #[cfg(feature = "tracing")]
+                tracing::trace!("Function `{}` took {:?}", stringify!(#func_name), duration);
+                result
+            }
         }
     };
 

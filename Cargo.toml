@@ -23,3 +23,5 @@ proc-macro2 = "1.0"
 syn = { version = "2.0.77", features = ["full"] }
 tracing = { version = "0.1", default-features = false, optional = true }
 
+[dev-dependencies]
+tokio = { version = "1.40", features = ["macros", "rt-multi-thread"] }
