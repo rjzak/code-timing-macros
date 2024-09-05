@@ -45,3 +45,11 @@ fn snippet() {
         println!("Avg: {avg}");
     });
 }
+
+#[test]
+fn snippet_result() {
+    let result = time_snippet!({
+        100 * 1000 + 20
+    });
+    assert_eq!(result, 100 * 1000 + 20);
+}

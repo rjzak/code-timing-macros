@@ -68,14 +68,14 @@ pub fn time_snippet(input: TokenStream) -> TokenStream {
         {
             let begin = line!();
             let start = std::time::Instant::now();
-            {
-                #block
-            }
+            let result =
+                #block;
             let duration: std::time::Duration = start.elapsed();
             #[cfg(not(feature = "tracing"))]
             println!("{}:{} took {:?}.", file!(), begin, duration);
             #[cfg(feature = "tracing")]
             tracing::trace!("{}:{} took {:?}.", file!(), begin, duration);
+            result
         }
     };
 
