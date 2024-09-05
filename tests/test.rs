@@ -46,10 +46,20 @@ fn snippet() {
     });
 }
 
+#[tokio::test]
+async fn async_snippet() {
+    use tokio::time::{sleep, Duration};
+
+    time_snippet!(
+        async {
+            sleep(Duration::from_millis(100)).await;
+        }
+        .await
+    )
+}
+
 #[test]
 fn snippet_result() {
-    let result = time_snippet!({
-        100 * 1000 + 20
-    });
+    let result = time_snippet!({ 100 * 1000 + 20 });
     assert_eq!(result, 100 * 1000 + 20);
 }

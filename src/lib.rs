@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![deny(missing_docs)]
 #![deny(clippy::cargo)]
+#![forbid(unsafe_code)]
 #![allow(unreachable_code)]
 
 use proc_macro::TokenStream;
