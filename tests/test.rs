@@ -60,6 +60,6 @@ async fn async_snippet() {
 
 #[test]
 fn snippet_result() {
-    let result = time_snippet!({ 100 * 1000 + 20 });
+    let result = time_snippet!(100 * 1000 + 20);
     assert_eq!(result, 100 * 1000 + 20);
 }
