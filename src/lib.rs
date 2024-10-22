@@ -22,11 +22,12 @@ pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
     let func_name = &input.sig.ident;
     let func_block = &input.block;
     let func_output = &input.sig.output;
+    let func_input = &input.sig.inputs;
 
     // Generate the wrapped function
     let output = if input.sig.asyncness.is_some() {
         quote! {
-            async fn #func_name() #func_output {
+            async fn #func_name(#func_input) #func_output {
                 let start = std::time::Instant::now();
                 let result = (|| async #func_block)().await;
                 let duration: std::time::Duration = start.elapsed();
@@ -39,7 +40,7 @@ pub fn time_function(_args: TokenStream, input: TokenStream) -> TokenStream {
         }
     } else {
         quote! {
-            fn #func_name() #func_output {
+            fn #func_name(#func_input) #func_output {
                 let start = std::time::Instant::now();
                 let result = (|| #func_block)();
                 let duration: std::time::Duration = start.elapsed();

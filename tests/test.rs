@@ -14,6 +14,11 @@ fn meaning_of_life() -> u8 {
 }
 
 #[time_function]
+fn function_with_args(data: &[u8]) -> usize {
+    data.len()
+}
+
+#[time_function]
 async fn test_async() -> Option<u16> {
     let handle = tokio::spawn(async { 10 });
 
@@ -26,6 +31,13 @@ fn simple_functions() {
     sleeper();
 
     assert_eq!(meaning_of_life(), 42);
+}
+
+#[test]
+fn simple_functions_with_args() {
+    let contents = std::fs::read(std::env::current_exe().expect("failed to get path to self"))
+        .expect("failed to read self");
+    let _contents_len = function_with_args(&contents);
 }
 
 #[tokio::test]
