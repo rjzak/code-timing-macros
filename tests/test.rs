@@ -4,12 +4,12 @@ use std::time::Duration;
 use code_timing_macros::{time_function, time_snippet};
 
 #[time_function]
-fn sleeper() {
+pub(crate) fn sleeper() {
     thread::sleep(Duration::from_secs_f32(2.0f32));
 }
 
 #[time_function]
-fn meaning_of_life() -> u8 {
+pub fn meaning_of_life() -> u8 {
     42
 }
 
