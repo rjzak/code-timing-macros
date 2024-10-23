@@ -75,3 +75,45 @@ fn snippet_result() {
     let result = time_snippet!(100 * 1000 + 20);
     assert_eq!(result, 100 * 1000 + 20);
 }
+
+mod object {
+    use code_timing_macros::time_function;
+
+    struct SomeObject {
+        num: u16,
+    }
+
+    impl SomeObject {
+        #[time_function(SomeObject::new())]
+        pub fn new() -> Self {
+            SomeObject { num: 22 }
+        }
+
+        #[time_function(SomeObject::semi_private())]
+        pub(crate) fn semi_private(&self) {
+            println!("Semi-private function");
+            self.private();
+        }
+
+        #[time_function(SomeObject::private())]
+        fn private(&self) {
+            println!("Private function")
+        }
+    }
+
+    impl Default for SomeObject {
+        #[time_function(SomeObject::default)]
+        fn default() -> Self {
+            SomeObject { num: 42 }
+        }
+    }
+
+    #[test]
+    fn test_obj() {
+        let default_version = SomeObject::default();
+        let constructed_version = SomeObject::new();
+
+        assert_ne!(default_version.num, constructed_version.num);
+        default_version.semi_private();
+    }
+}
