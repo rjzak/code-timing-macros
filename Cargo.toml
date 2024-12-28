@@ -1,6 +1,6 @@
 [package]
 name = "code-timing-macros"
-version = "0.0.5"
+version = "0.0.6"
 authors = ["Richard Zak <richard.j.zak@gmail.com>"]
 description = "Macros for easily measuring execution time of various code pieces"
 repository = "https://github.com/rjzak/code-timing-macros"
@@ -15,6 +15,7 @@ proc-macro = true
 [features]
 default = []
 release = []
+testing = []
 tracing = ["dep:tracing"]
 
 [dependencies]
@@ -24,4 +25,4 @@ syn = { version = "2.0", features = ["full"] }
 tracing = { version = "0.1", default-features = false, optional = true }
 
 [dev-dependencies]
-tokio = { version = "1.40", features = ["macros", "rt-multi-thread", "time"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }

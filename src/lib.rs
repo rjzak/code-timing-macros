@@ -15,7 +15,11 @@ pub fn time_function(
     input: TokenStream,
 ) -> TokenStream {
     // Do nothing if release and not using the release feature
-    #[cfg(all(not(debug_assertions), not(feature = "release")))]
+    // Do nothing if not testing when using the testing feature
+    #[cfg(any(
+        all(not(debug_assertions), not(feature = "release")),
+        all(not(test), feature = "testing")
+    ))]
     return input;
 
     // Parse the input token stream as a function
