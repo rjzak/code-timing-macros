@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![deny(missing_docs)]
 #![deny(clippy::cargo)]
+#![deny(clippy::pedantic)]
 #![forbid(unsafe_code)]
 #![allow(unreachable_code)]
 
@@ -42,26 +43,26 @@ pub fn time_function(
     let output = if input.sig.asyncness.is_some() {
         quote! {
             async #func_vis fn #func_name(#func_input) #func_output {
-                let start = std::time::Instant::now();
+                let start = ::std::time::Instant::now();
                 let result = (|| async #func_block)().await;
-                let duration: std::time::Duration = start.elapsed();
+                let duration: ::std::time::Duration = start.elapsed();
                 #[cfg(not(feature = "tracing"))]
                 println!("`{}` took {:?}", #func_label, duration);
                 #[cfg(feature = "tracing")]
-                tracing::trace!("`{}` took {:?}", #func_label, duration);
+                ::tracing::trace!("`{}` took {:?}", #func_label, duration);
                 result
             }
         }
     } else {
         quote! {
             #func_vis fn #func_name(#func_input) #func_output {
-                let start = std::time::Instant::now();
+                let start = ::std::time::Instant::now();
                 let result = (|| #func_block)();
-                let duration: std::time::Duration = start.elapsed();
+                let duration: ::std::time::Duration = start.elapsed();
                 #[cfg(not(feature = "tracing"))]
                 println!("`{}` took {:?}", #func_label, duration);
                 #[cfg(feature = "tracing")]
-                tracing::trace!("`{}` took {:?}", #func_label, duration);
+                ::tracing::trace!("`{}` took {:?}", #func_label, duration);
                 result
             }
         }
@@ -83,14 +84,14 @@ pub fn time_snippet(input: TokenStream) -> TokenStream {
     let output = quote! {
         {
             let begin = line!();
-            let start = std::time::Instant::now();
+            let start = ::std::time::Instant::now();
             let result =
                 #block;
-            let duration: std::time::Duration = start.elapsed();
+            let duration: ::std::time::Duration = start.elapsed();
             #[cfg(not(feature = "tracing"))]
             println!("{}:{} took {:?}.", file!(), begin, duration);
             #[cfg(feature = "tracing")]
-            tracing::trace!("{}:{} took {:?}.", file!(), begin, duration);
+            ::tracing::trace!("{}:{} took {:?}.", file!(), begin, duration);
             result
         }
     };
