@@ -39,6 +39,12 @@ pub fn time_function(
         args.to_string()
     };
 
+    let log_stmt = if cfg!(feature = "tracing") {
+        quote! { ::tracing::trace!("`{}` took {:?}", #func_label, duration); }
+    } else {
+        quote! { println!("`{}` took {:?}", #func_label, duration); }
+    };
+
     // Generate the wrapped function
     let output = if input.sig.asyncness.is_some() {
         quote! {
@@ -46,10 +52,7 @@ pub fn time_function(
                 let start = ::std::time::Instant::now();
                 let result = (|| async #func_block)().await;
                 let duration: ::std::time::Duration = start.elapsed();
-                #[cfg(not(feature = "tracing"))]
-                println!("`{}` took {:?}", #func_label, duration);
-                #[cfg(feature = "tracing")]
-                ::tracing::trace!("`{}` took {:?}", #func_label, duration);
+                #log_stmt
                 result
             }
         }
@@ -59,10 +62,7 @@ pub fn time_function(
                 let start = ::std::time::Instant::now();
                 let result = (|| #func_block)();
                 let duration: ::std::time::Duration = start.elapsed();
-                #[cfg(not(feature = "tracing"))]
-                println!("`{}` took {:?}", #func_label, duration);
-                #[cfg(feature = "tracing")]
-                ::tracing::trace!("`{}` took {:?}", #func_label, duration);
+                #log_stmt
                 result
             }
         }
@@ -81,6 +81,12 @@ pub fn time_snippet(input: TokenStream) -> TokenStream {
 
     let block: proc_macro2::token_stream::TokenStream = input.into();
 
+    let log_stmt = if cfg!(feature = "tracing") {
+        quote! { ::tracing::trace!("{}:{} took {:?}.", file!(), begin, duration); }
+    } else {
+        quote! { println!("{}:{} took {:?}.", file!(), begin, duration); }
+    };
+
     let output = quote! {
         {
             let begin = line!();
@@ -88,10 +94,7 @@ pub fn time_snippet(input: TokenStream) -> TokenStream {
             let result =
                 #block;
             let duration: ::std::time::Duration = start.elapsed();
-            #[cfg(not(feature = "tracing"))]
-            println!("{}:{} took {:?}.", file!(), begin, duration);
-            #[cfg(feature = "tracing")]
-            ::tracing::trace!("{}:{} took {:?}.", file!(), begin, duration);
+            #log_stmt
             result
         }
     };
