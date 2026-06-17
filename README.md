@@ -1,9 +1,10 @@
-[![Test](https://github.com/rjzak/code-timing-macros/actions/workflows/test.yml/badge.svg)](https://github.com/rjzak/code-timing-macros/actions/workflows/test.yml)[![Lint](https://github.com/rjzak/code-timing-macros/actions/workflows/lint.yml/badge.svg)](https://github.com/rjzak/code-timing-macros/actions/workflows/lint.yml)[![Crates.io Version](https://img.shields.io/crates/v/code-timing-macros)](https://crates.io/crates/code-timing-macros)
+[![Test](https://github.com/rjzak/code-timing-macros/actions/workflows/test.yml/badge.svg)](https://github.com/rjzak/code-timing-macros/actions/workflows/test.yml)
+[![Lint](https://github.com/rjzak/code-timing-macros/actions/workflows/lint.yml/badge.svg)](https://github.com/rjzak/code-timing-macros/actions/workflows/lint.yml)
+[![License](https://img.shields.io/crates/l/code-timing-macros)](https://github.com/rjzak/code-timing-macros)
+[![Version](https://img.shields.io/crates/v/code-timing-macros)](https://crates.io/crates/code-timing-macros)
 
 ## code-timing-macros!
 This crate aims to provide useful, easy to use macros to measure the time taken to execute some code. At present, this is **alpha** quality, and subject to changes.
-
-Contributions welcomed!
 
 ### Macros:
 * Adding `#[time_function]` to a function causes the program to print how long a function took to run when it's finished.
