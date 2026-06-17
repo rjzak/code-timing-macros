@@ -15,14 +15,14 @@ proc-macro = true
 [features]
 default = []
 release = []
-testing = []
-tracing = ["dep:tracing"]
+tracing = []
 
 [dependencies]
 quote = "1"
 proc-macro2 = "1.0"
 syn = { version = "2.0", features = ["full"] }
-tracing = { version = "0.1", default-features = false, optional = true }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+tracing = { version = "0.1", default-features = false }
+

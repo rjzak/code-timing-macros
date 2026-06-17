@@ -10,17 +10,15 @@ use quote::quote;
 use syn::ItemFn;
 
 /// Time the duration of a function, either to stdout or via `tracing`.
+/// If using the `tracing` feature, ensure the tracing crate is in
+/// your `Cargo.toml`!
 #[proc_macro_attribute]
 pub fn time_function(
     #[allow(unused_variables)] args: TokenStream,
     input: TokenStream,
 ) -> TokenStream {
     // Do nothing if release and not using the release feature
-    // Do nothing if not testing when using the testing feature
-    #[cfg(any(
-        all(not(debug_assertions), not(feature = "release")),
-        all(not(test), feature = "testing")
-    ))]
+    #[cfg(all(not(debug_assertions), not(feature = "release")))]
     return input;
 
     // Parse the input token stream as a function
@@ -72,7 +70,9 @@ pub fn time_function(
     output.into()
 }
 
-/// Time the duration of code snippet, either to stdout or via `tracing`.
+/// Time the duration of a code snippet, either to stdout or via `tracing`.
+/// If using the `tracing` feature, ensure the tracing crate is in
+/// your `Cargo.toml`!
 #[proc_macro]
 pub fn time_snippet(input: TokenStream) -> TokenStream {
     // Do nothing if release and not using the release feature
