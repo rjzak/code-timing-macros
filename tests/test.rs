@@ -26,6 +26,14 @@ async fn test_async() -> Option<u16> {
     Some(out)
 }
 
+#[time_function]
+pub async fn pub_test_async() -> Option<u16> {
+    let handle = tokio::spawn(async { 10 });
+
+    let out = handle.await.unwrap();
+    Some(out)
+}
+
 #[test]
 fn simple_functions() {
     sleeper();

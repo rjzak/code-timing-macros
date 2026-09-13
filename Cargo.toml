@@ -8,6 +8,7 @@ keywords = ["proc_macro", "profiling", "timing"]
 categories = ["development-tools"]
 edition = "2021"
 license = "Apache-2.0"
+rust-version = "1.78"
 
 [lib]
 proc-macro = true

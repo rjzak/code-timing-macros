@@ -46,7 +46,7 @@ pub fn time_function(
     // Generate the wrapped function
     let output = if input.sig.asyncness.is_some() {
         quote! {
-            async #func_vis fn #func_name(#func_input) #func_output {
+            #func_vis async fn #func_name(#func_input) #func_output {
                 let start = ::std::time::Instant::now();
                 let result = (|| async #func_block)().await;
                 let duration: ::std::time::Duration = start.elapsed();
