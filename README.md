@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/crates/v/code-timing-macros)](https://crates.io/crates/code-timing-macros)
 
 ## code-timing-macros!
-This crate aims to provide useful, easy to use macros to measure the time taken to execute some code. At present, this is **alpha** quality, and subject to changes.
+This crate aims to provide useful, easy to use macros to measure the time taken to execute some code. At present, this is **beta** quality and could change.
 
 ### Macros:
 * Adding `#[time_function]` to a function causes the program to print how long a function took to run when it's finished.

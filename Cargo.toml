@@ -1,10 +1,10 @@
 [package]
 name = "code-timing-macros"
-version = "0.0.8"
+version = "0.1.0"
 authors = ["Richard Zak <richard.j.zak@gmail.com>"]
-description = "Macros for easily measuring execution time of various code pieces"
+description = "Macros for easily measuring execution time of functions or code snippets."
 repository = "https://github.com/rjzak/code-timing-macros"
-keywords = ["proc_macro", "profiling", "timing"]
+keywords = ["macros", "proc-macro", "profiling", "timing"]
 categories = ["development-tools"]
 edition = "2021"
 license = "Apache-2.0"
